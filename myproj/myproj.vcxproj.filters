@@ -61,6 +61,12 @@
     <None Include="shaders\environmentmap-vertexshader.glsl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="rain-vertex.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="rain-fragment.glsl">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="helperFunctions.h">
@@ -111,6 +117,9 @@
     <ClInclude Include="myVBO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="particleGenerator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -153,6 +162,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="myVBO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="particleGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -24,6 +24,7 @@
 #include "default_constants.h"
 #include "myScene.h"
 #include "myShaders.h"
+#include "particleGenerator.hpp" // rain particles
 
 using namespace std;
 
@@ -203,67 +204,6 @@ int main(int argc, char *argv[])
 	obj->createmyVAO();
 	scene.addObjects(obj, "ChristmasChallenge3");
 
-	//plane1
-	obj = new myObject();
-	obj->readObjects("models/plane.obj", false, false);
-	obj->computeTexturecoordinates_plane();
-	obj->createmyVAO();
-	obj->setTexture(fbo->colortexture, mySubObject::COLORMAP);
-	obj->translate(0, 0, -2);
-	scene.addObjects(obj, "plane");
-	
-	//plane2
-	obj = new myObject();
-	obj->readObjects("models/plane.obj", false, false);
-	obj->computeTexturecoordinates_plane();
-	obj->createmyVAO();
-	obj->setTexture(fbo->colortexture, mySubObject::COLORMAP);
-	obj->scale(0.1f, 0.1f, 0.1f);
-	obj->translate(0.57f, -0.17f, -2.0f);
-	scene.addObjects(obj, "plane2");
-
-	//objectwithtexture has spheretexture of scenary.ppm
-	obj = new myObject();
-	obj->readObjects("models/sphere.obj", false, true);
-	obj->computeTexturecoordinates_sphere();
-	obj->createmyVAO();
-	obj->setTexture(new myTexture("models/scenary.jpg"), mySubObject::COLORMAP);
-	obj->translate(6, 4, 8);
-	scene.addObjects(obj, "objectwithtexture");
-
-	//apple has bump texture
-	obj = new myObject();
-	obj->readObjects("models/apple.obj", false, true);
-	obj->computeTexturecoordinates_cylinder();
-	obj->computeTangents();
-	obj->createmyVAO();
-	obj->setTexture(new myTexture("models/br-diffuse.ppm"), mySubObject::COLORMAP);
-	obj->setTexture(new myTexture("models/br-normal.ppm"), mySubObject::BUMPMAP);
-	obj->translate(16, 14, 18);
-	scene.addObjects(obj, "apple");
-
-	//mario 
-	obj = new myObject();
-	obj->readObjects("models/MarioandLuigi/mario_obj.obj", true, false);
-	obj->createmyVAO();
-	obj->scale(0.4f, 0.4f, 0.4f);
-	scene.addObjects(obj, "mario");
-
-	//enviornment mapped object
-	obj = new myObject();
-	obj->readObjects("models/apple.obj", false, false);
-	obj->computeTexturecoordinates_sphere();
-	obj->createmyVAO();
-	//vector <string> cubemaps = { "models/yokohamapark/posx.jpg", "models/yokohamapark/negx.jpg", "models/yokohamapark/posy.jpg", "models/yokohamapark/negy.jpg", "models/yokohamapark/posz.jpg", "models/yokohamapark/negz.jpg" };
-	vector <string> cubemaps = { "models/building/posx.jpg", "models/building/negx.jpg", "models/building/posy.jpg", "models/building/negy.jpg", "models/building/posz.jpg", "models/building/negz.jpg" };
-	obj->setTexture(new myTexture("models/scenary.jpg"), mySubObject::COLORMAP);
-	obj->setTexture(new myTexture(cubemaps), mySubObject::CUBEMAP);
-	obj->scale(10.0f, 10.0f, 10.0f);
-	obj->translate(10, 6, 10);
-	scene.addObjects(obj, "applewithenvironmentmap");
-
-
-
 	/**************************SETTING UP OPENGL SHADERS ***************************/
 	myShaders shaders;
 	shaders.addShader(new myShader("shaders/basic-vertexshader.glsl", "shaders/basic-fragmentshader.glsl"), "shader_basic");
@@ -273,6 +213,10 @@ int main(int argc, char *argv[])
 	shaders.addShader(new myShader("shaders/bump-vertexshader.glsl", "shaders/bump-fragmentshader.glsl"), "shader_bump");
 	shaders.addShader(new myShader("shaders/imageprocessing-vertexshader.glsl", "shaders/imageprocessing-fragmentshader.glsl"), "shader_imageprocessing");
 	shaders.addShader(new myShader("shaders/environmentmap-vertexshader.glsl", "shaders/environmentmap-fragmentshader.glsl"), "shader_environmentmap");
+
+	// rain shader
+	shaders.addShader(new myShader("shaders/rain-vertex.glsl", "shaders/rain-fragment.glsl"), "rain_shader");
+	// https://learnopengl.com/In-Practice/2D-Game/Particles
 
 
 

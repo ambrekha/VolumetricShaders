@@ -19,13 +19,12 @@ public:
 
 	myCamera();
 	~myCamera();
-	void reset();
 
 	void crystalball_rotateView(int dx, int dy);
 	void firstperson_rotateView(int dx, int dy);
 	void panView(int dx, int dy);
 
-	glm::vec3 constructRay(int x, int y) const;
+	glm::vec3 constructRay(int x, int y);
 	
 	glm::mat4 projectionMatrix() const;
 	glm::mat4 viewMatrix() const;
@@ -34,6 +33,4 @@ public:
 	void moveBack(float size);
 	void turnLeft(float size);
 	void turnRight(float size);
-
-	void print() const;
 };

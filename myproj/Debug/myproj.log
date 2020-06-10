@@ -1,0 +1,11 @@
+﻿cl : Command line warning D9030: '/Gm' is incompatible with multiprocessing; ignoring /MP switch
+  myShader.cpp
+  myObject3D.cpp
+  myCamera.cpp
+  main.cpp
+  Generating Code...
+nfd.lib(nfd_win.obj) : warning LNK4217: locally defined symbol _sprintf_s imported in function "int __cdecl AppendExtensionToSpecBuf(char const *,char *,unsigned int)" (?AppendExtensionToSpecBuf@@YAHPBDPADI@Z)
+nfd.lib(nfd_common.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'nfd.lib(nfd_common.obj)' or at 'C:\Users\nabil\Dropbox\ESIEE-IN4I24-17\TP1\startingcode -solution\Debug\vc110.pdb'; linking object as if no debug info
+nfd.lib(nfd_win.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'nfd.lib(nfd_win.obj)' or at 'C:\Users\nabil\Dropbox\ESIEE-IN4I24-17\TP1\startingcode -solution\Debug\vc110.pdb'; linking object as if no debug info
+  myproj.vcxproj -> C:\Users\nabil\Dropbox\ESIEE-IN4I24-17\TP1\startingcode -solution\Debug\myproj.exe
+  myproj.vcxproj -> C:\Users\nabil\Dropbox\ESIEE-IN4I24-17\TP1\startingcode -solution\Debug\myproj.pdb (Full PDB)

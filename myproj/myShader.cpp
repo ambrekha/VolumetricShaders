@@ -2,7 +2,6 @@
 #include <fstream>
 #include <string>
 #include <map>
-#include <vector>
 
 #include <GL/glew.h>
 
@@ -17,14 +16,11 @@ using namespace std;
 
 myShader::myShader(string file_vertexshader, string file_fragmentshader)
 {
-	text_to_id.clear();
-	clear();
-
 	vertex_shader = _initShader(GL_VERTEX_SHADER, file_vertexshader);
 	fragment_shader = _initShader(GL_FRAGMENT_SHADER, file_fragmentshader);
 
 	if (!_initProgram())
-		cout << "Error: shader not initialized properly.\n";
+		cerr << "Error: shader not initialized properly.\n";
 }
 
 myShader::~myShader()
@@ -35,7 +31,6 @@ myShader::~myShader()
 GLuint myShader::_initShader(GLenum type, string filename)
 {
 	ifstream fin(filename);
-
 	if (!fin)
 	{
 		cerr << "Unable to Open File " << filename << "\n";
@@ -97,17 +92,17 @@ void myShader::_shaderErrors(const GLint shader) {
 
 void myShader::clear()
 {
+	glDeleteProgram(shaderprogram);
 	glDeleteShader(vertex_shader);
 	glDeleteShader(fragment_shader);
-	glDeleteProgram(shaderprogram);
 }
 
-void myShader::start() const
+void myShader::start()
 {
 	glUseProgram(shaderprogram);
 }
 
-void myShader::stop() const
+void myShader::stop()
 {
 	glUseProgram(0);
 }
@@ -115,25 +110,20 @@ void myShader::stop() const
 GLint myShader::getUniformLocation(string text) 
 {
 	if (text_to_id.find(text) == text_to_id.end())
-	{
-		int location = glGetUniformLocation(shaderprogram, text.c_str());
-		if (location == -1)
-		{
-			//cerr << "Error: unable to get location of variable with name: " << text << endl;
-			return -1;
-		}
-		else text_to_id[text] = location;
-	}
+		text_to_id[text] = glGetUniformLocation(shaderprogram, text.c_str());
+
+	if (text_to_id[text] == -1)
+		cout << "Error: unable to get location of variable with name: " << text << endl;
 
 	return text_to_id[text];
 }
 
-void myShader::setUniform(std::string name, glm::mat4 mat)
+void myShader::setUniform(std::string name, glm::mat4& mat)
 {
 	glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat));
 }
 
-void myShader::setUniform(std::string name, glm::mat3 mat)
+void myShader::setUniform(std::string name, glm::mat3 &mat)
 {
 	glUniformMatrix3fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat));
 }
@@ -163,9 +153,4 @@ void myShader::setUniform(std::string name, glm::vec4 vec)
 	glUniform4fv(getUniformLocation(name), 1, glm::value_ptr(vec));
 }
 
-void myShader::setUniform(std::string name, vector<glm::vec3> input_array)
-{
-	for (unsigned int i = 0; i < input_array.size(); ++i) {
-		glUniform3fv(getUniformLocation(name + "[" + std::to_string(i) + "]"), 1, &input_array[i][0]);
-	}
-}
+

@@ -3,8 +3,6 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <map>
-#include <vector>
-#include <string>
 
 class myShader
 {
@@ -21,20 +19,18 @@ public:
 	~myShader();
 
 	void clear();
-	void start() const;
-	void stop() const;
+	void start();
+	void stop();
 
 	GLint getUniformLocation(std::string name);
 
-	void setUniform(std::string name, glm::mat4 );
-	void setUniform(std::string name, glm::mat3 );
+	void setUniform(std::string name, glm::mat4 &);
+	void setUniform(std::string name, glm::mat3 &);
 	void setUniform(std::string name, float);
 	void setUniform(std::string name, int);
 	void setUniform(std::string name, glm::vec2);
 	void setUniform(std::string name, glm::vec3);
 	void setUniform(std::string name, glm::vec4);
-	void setUniform(std::string name, std::vector<glm::vec3>  input_array);
-	
 
 private:
 	GLuint _initShader(GLenum type, std::string filename);

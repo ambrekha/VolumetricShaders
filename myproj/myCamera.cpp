@@ -7,45 +7,30 @@
 
 #include "helperFunctions.h"
 #include "myCamera.h"
-#include <iostream>
-#include "default_constants.h"
 
 using namespace std;
 
 
 myCamera::myCamera()
 {
-	camera_eye = DEFAULT_CAMERA_EYE;
-	camera_up = DEFAULT_CAMERA_UP;
-	camera_forward = DEFAULT_CAMERA_FORWARD;
+	camera_eye = glm::vec3(0.0f, 0.0f, 2.0f);
+	camera_up = glm::vec3(0.0f, 1.0f, 0.0f);
+	camera_forward = glm::vec3(0.0f, 0.0f, -1.0f);
 
-	fovy = DEFAULT_FOVY;
-	zNear = DEFAULT_zNEAR;
-	zFar = DEFAULT_zFAR;
+	fovy = 45.0f;
+	zNear = 0.1f;
+	zFar = 2000.0f;
 
-	window_width = DEFAULT_WINDOW_WIDTH;
-	window_height = DEFAULT_WINDOW_HEIGHT;
+	window_width = 640;
+	window_height = 480;
 }
 
 myCamera::~myCamera()
 {
 }
 
-void myCamera::reset()
-{
-	camera_eye = DEFAULT_CAMERA_EYE;
-	camera_up = DEFAULT_CAMERA_UP;
-	camera_forward = DEFAULT_CAMERA_FORWARD;
-
-	fovy = DEFAULT_FOVY;
-	zNear = DEFAULT_zNEAR;
-	zFar = DEFAULT_zFAR;
-}
-
 void myCamera::crystalball_rotateView(int dx, int dy)
 {
-	if (dx == 0 && dy == 0) return;
-
 	float vx = static_cast<float>(dx) / static_cast<float>(window_width);
 	float vy = -static_cast<float>(dy) / static_cast<float>(window_height);
 
@@ -63,8 +48,6 @@ void myCamera::crystalball_rotateView(int dx, int dy)
 
 void myCamera::firstperson_rotateView(int dx, int dy)
 {
-	if (dx == 0 && dy == 0) return;
-
 	float vx = static_cast<float>(dx) / static_cast<float>(window_width);
 	float vy = -static_cast<float>(dy) / static_cast<float>(window_height);
 
@@ -76,13 +59,11 @@ void myCamera::firstperson_rotateView(int dx, int dy)
 	glm::vec3 rotation_axis = glm::normalize(glm::cross(tomovein_direction, camera_forward));
 
 	rotate(camera_forward, rotation_axis, theta, true);
-	//rotate(camera_up, rotation_axis, theta, true);
+	rotate(camera_up, rotation_axis, theta, true);
 }
 
 void myCamera::panView(int dx, int dy)
 {
-	if (dx == 0 && dy == 0) return;
-
 	float vx = static_cast<float>(dx) / static_cast<float>(window_width);
 	float vy = -static_cast<float>(dy) / static_cast<float>(window_height);
 
@@ -92,7 +73,7 @@ void myCamera::panView(int dx, int dy)
 	camera_eye += 1.6f * tomovein_direction;
 }
 
-glm::vec3 myCamera::constructRay(int x, int y) const
+glm::vec3 myCamera::constructRay(int x, int y)
 {
 	glm::mat4 projection_matrix = projectionMatrix( );
 	glm::mat4 view_matrix = viewMatrix();
@@ -121,28 +102,20 @@ glm::mat4 myCamera::viewMatrix() const
 
 void myCamera::moveForward(float size)
 {
-	camera_eye += size * camera_forward;
+	//TODO
 }
 
 void myCamera::moveBack(float size)
 {
-	camera_eye -= size * camera_forward;
+	//TODO
 }
 
 void myCamera::turnLeft(float size)
 {
-	rotate(camera_forward, camera_up, size, true);
+	//TODO
 }
 
 void myCamera::turnRight(float size)
 {
-	rotate(camera_forward, camera_up, -size, true);
+	//TODO
 }
-
-void myCamera::print() const
-{
-	cout << "Eye: (" << camera_eye.x << ", " << camera_eye.y << ", " << camera_eye.z << ")" << endl;
-	cout << "Forward: (" << camera_forward.x << ", " << camera_forward.y << ", " << camera_forward.z << ")" << endl;
-	cout << "Up: (" << camera_up.x << ", " << camera_up.y << ", " << camera_up.z << ")" << endl;
-}
-
